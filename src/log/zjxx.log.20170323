@@ -1,0 +1,50 @@
+2017-03-23 22:02:01,799 T4368 INFO 用户【kdgl】已进入zjxx_view函数
+2017-03-23 22:02:01,809 T4368 ERROR 后台函数[zjxx_view]执行错误:(1146, "Table 'kdgl.agentinfo' doesn't exist")
+Traceback (most recent call last):
+  File "F:\zjyw\src\oa\zjxx.py", line 30, in zjxx_view
+    rs = myapi.sql_execute(cur, sql)
+  File "F:\zjyw\src\zjyw_utils\utils.py", line 172, in sql_execute
+    return ResultSet( cur , sql , params , encoding )
+  File "F:\zjyw\src\zjyw_utils\utils.py", line 192, in __init__
+    self.__cursor.execute( sql )
+  File "E:\Python27\lib\site-packages\MySQLdb\cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "E:\Python27\lib\site-packages\MySQLdb\connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+          errorclass = <class '_mysql_exceptions.ProgrammingError'>
+          errorvalue = ProgrammingError(1146, "Table 'kdgl.agentinfo' doesn't exist")
+               error = (<class '_mysql_exceptions.ProgrammingError'>, ProgrammingError(1146, "Table 'kdgl.agentinfo' doesn't exist"))
+ProgrammingError: (1146, "Table 'kdgl.agentinfo' doesn't exist")
+2017-03-23 22:02:04,142 T34860 ERROR 后台函数[zjfz_view]执行错误:(1146, "Table 'kdgl.agentgroupinfo' doesn't exist")
+Traceback (most recent call last):
+  File "F:\zjyw\src\oa\zjxx.py", line 166, in zjfz_view
+    rs = myapi.sql_execute(cur, sql)
+  File "F:\zjyw\src\zjyw_utils\utils.py", line 172, in sql_execute
+    return ResultSet( cur , sql , params , encoding )
+  File "F:\zjyw\src\zjyw_utils\utils.py", line 192, in __init__
+    self.__cursor.execute( sql )
+  File "E:\Python27\lib\site-packages\MySQLdb\cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "E:\Python27\lib\site-packages\MySQLdb\connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+          errorclass = <class '_mysql_exceptions.ProgrammingError'>
+          errorvalue = ProgrammingError(1146, "Table 'kdgl.agentgroupinfo' doesn't exist")
+               error = (<class '_mysql_exceptions.ProgrammingError'>, ProgrammingError(1146, "Table 'kdgl.agentgroupinfo' doesn't exist"))
+ProgrammingError: (1146, "Table 'kdgl.agentgroupinfo' doesn't exist")
+2017-03-23 22:02:06,033 T9156 INFO 自动生成的主机ID的页面跳转
+2017-03-23 22:02:08,713 T29536 ERROR 后台函数[zjid_view]执行错误:(1305, 'FUNCTION kdgl.nextval does not exist')
+Traceback (most recent call last):
+  File "F:\zjyw\src\oa\zjxx.py", line 362, in zjid_made_view
+    rs = myapi.sql_execute(cur, sql)
+  File "F:\zjyw\src\zjyw_utils\utils.py", line 172, in sql_execute
+    return ResultSet( cur , sql , params , encoding )
+  File "F:\zjyw\src\zjyw_utils\utils.py", line 192, in __init__
+    self.__cursor.execute( sql )
+  File "E:\Python27\lib\site-packages\MySQLdb\cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "E:\Python27\lib\site-packages\MySQLdb\connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+          errorclass = <class '_mysql_exceptions.OperationalError'>
+          errorvalue = OperationalError(1305, 'FUNCTION kdgl.nextval does not exist')
+               error = (<class '_mysql_exceptions.OperationalError'>, OperationalError(1305, 'FUNCTION kdgl.nextval does not exist'))
+OperationalError: (1305, 'FUNCTION kdgl.nextval does not exist')

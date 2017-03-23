@@ -1,0 +1,32 @@
+2017-03-23 22:02:12,095 T45448 ERROR 后台函数[rwxx_view]执行错误:(1146, "Table 'kdgl.agenttask' doesn't exist")
+Traceback (most recent call last):
+  File "F:\zjyw\src\oa\rwxx.py", line 29, in rwxx_view
+    rs = myapi.sql_execute(cur, sql)
+  File "F:\zjyw\src\zjyw_utils\utils.py", line 172, in sql_execute
+    return ResultSet( cur , sql , params , encoding )
+  File "F:\zjyw\src\zjyw_utils\utils.py", line 192, in __init__
+    self.__cursor.execute( sql )
+  File "E:\Python27\lib\site-packages\MySQLdb\cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "E:\Python27\lib\site-packages\MySQLdb\connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+          errorclass = <class '_mysql_exceptions.ProgrammingError'>
+          errorvalue = ProgrammingError(1146, "Table 'kdgl.agenttask' doesn't exist")
+               error = (<class '_mysql_exceptions.ProgrammingError'>, ProgrammingError(1146, "Table 'kdgl.agenttask' doesn't exist"))
+ProgrammingError: (1146, "Table 'kdgl.agenttask' doesn't exist")
+2017-03-23 22:02:13,957 T5500 ERROR 后台函数[rwxx_view]执行错误:(1146, "Table 'kdgl.agentgroupinfo' doesn't exist")
+Traceback (most recent call last):
+  File "F:\zjyw\src\oa\rwxx.py", line 64, in rwdz_view
+    group_rs = myapi.sql_execute(cur, group_sql)
+  File "F:\zjyw\src\zjyw_utils\utils.py", line 172, in sql_execute
+    return ResultSet( cur , sql , params , encoding )
+  File "F:\zjyw\src\zjyw_utils\utils.py", line 192, in __init__
+    self.__cursor.execute( sql )
+  File "E:\Python27\lib\site-packages\MySQLdb\cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "E:\Python27\lib\site-packages\MySQLdb\connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+          errorclass = <class '_mysql_exceptions.ProgrammingError'>
+          errorvalue = ProgrammingError(1146, "Table 'kdgl.agentgroupinfo' doesn't exist")
+               error = (<class '_mysql_exceptions.ProgrammingError'>, ProgrammingError(1146, "Table 'kdgl.agentgroupinfo' doesn't exist"))
+ProgrammingError: (1146, "Table 'kdgl.agentgroupinfo' doesn't exist")
