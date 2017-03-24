@@ -11,9 +11,7 @@ urlpatterns = patterns('',
     url(r'^css/(.*)$' , 'django.views.static.serve', {'document_root': os.path.join( settings.STATIC_DIR , 'css' ) } ) ,
     url(r'^font/(.*)$' , 'django.views.static.serve', {'document_root': os.path.join( settings.STATIC_DIR , 'font' ) } ) ,
     url(r'^img/(.*)$' , 'django.views.static.serve', {'document_root': os.path.join( settings.STATIC_DIR , 'img' ) } ) ,
-    url(r'^js/(.*)$' , 'django.views.static.serve', {'document_root': os.path.join( settings.STATIC_DIR , 'js' ) } ) ,
-    url(r'^modules/(.*)$' , 'django.views.static.serve', {'document_root': os.path.join( settings.FILES_DIR ) } ),
-    
+    url(r'^js/(.*)$' , 'django.views.static.serve', {'document_root': os.path.join( settings.STATIC_DIR , 'js' ) } ) ,    
     # 登录页面
     url(r'^$' , 'oa.views.index', name='index') ,
     
@@ -22,13 +20,12 @@ urlpatterns = patterns('',
     url(r'^main/$', 'oa.views.main_view'), 
     url(r'^admin/', include(admin.site.urls)),
     
-    #主机管理部分
-    url(r'^zjxx/$', 'oa.zjxx.zjxx_view'), 
-    url(r'^zjxx_detail/$', 'oa.zjxx.zjxx_detail_view'), 
-    url(r'^zjxx_del/$', 'oa.zjxx.zjxx_del_view'), 
-    url(r'^zjfz/$', 'oa.zjxx.zjfz_view'),
+    #快递发货
+    url(r'^kd_info/$', 'oa.zjxx.kd_info_view'), 
+    url(r'^update_kdxx/$', 'oa.zjxx.update_kdxx_view'), 
+    url(r'^kdxx_del/$', 'oa.zjxx.kdxx_del_view'), 
+    url(r'^kd_edit/$', 'oa.zjxx.kd_edit_view'),
     url(r'^save_fz/$', 'oa.zjxx.save_zjfz_view'),
-    url(r'^zjid/$', 'oa.zjxx.zjid_view'),
     url(r'^zjid_made/$', 'oa.zjxx.zjid_made_view'), 
     url(r'^zjxx_checkinfo/$', 'oa.zjxx.zjxx_checkinfo_view'),
     url(r'^zjxx_check_detail_info/$', 'oa.zjxx.zjxx_check_detail_info_view'),

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <!-- start: Meta -->
+    <meta charset="UTF-8">
+    <title>快递管理系统</title>
+    <meta name="description" content="zjyw">
+    <meta name="author" content="cdg">
+    <meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <!-- end: Meta -->
+    
+    <!-- start: Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- end: Mobile Specific -->
+    
+    <!-- start: CSS -->
+    <link id="bootstrap-style" href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link id="base-style" href="/css/style.css" rel="stylesheet">
+    <link id="base-style-responsive" href="/css/style-responsive.css" rel="stylesheet">
+    <!-- end: CSS -->
+
+    <!-- start: Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <!-- end: Favicon -->
+    
+    <style>  
+        div.graph  
+                {  
+                    width: 280px;  
+                    height: 200px;  
+                }  
+        
+    </style>
+</head>
+
+<body>
+   <!-- start: Content -->
+    {% if not xyxx %}
+          
+    <div id="content_detail" class="box span12">
+    <div class="row-fluid sortable">  
+
+        <div class="box-header" data-original-title>
+            <h2><i class="icon-reorder"></i><span class="break"></span>快递信息</h2>
+        </div>     
+        <div class="box-content">
+            <table class="table table-striped table-bordered bootstrap-datatable datatable">
+              <thead>
+                  <tr>
+                      <th>快递单号</th>
+                      <th>快递员ID</th>
+                      <th>快递费</th>
+                      <th>货架编号</th>
+                      <th>快递状态</th>
+                      <th>快递类型</th>
+                      <th>快递种类</th>
+                      <th>发件人</th>
+                      <th>发件人联系方式</th>
+                      <th>发件人地址</th>
+                      <th>收件人</th>
+                      <th>收件人联系方式</th>
+                      <th>收件人地址</th>
+                      <th>操作</th>
+                  </tr>
+              </thead>   
+              <tbody>
+                {% for zjxx in kd_info %}
+                <tr>
+                    <td class="center"><h5>{{ zjxx.express_number }}</td>
+                    
+                    {% if zjxx.express_user_id %}
+                        <td class="center"><h5>{{ zjxx.express_user_id }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+                    
+                    {% if zjxx.express_money %}
+                        <td class="center"><h5>{{ zjxx.express_money }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+                    
+                    {% if zjxx.shelf_number %}
+                        <td class="center"><h5>{{ zjxx.shelf_number }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+                    
+                    {% if zjxx.express_status %}
+                        <td class="center"><h5>{{ zjxx.express_status }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+
+                    {% if zjxx.type %}
+                        <td class="center"><h5>{{ zjxx.type }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+
+                    {% if zjxx.express_classification %}
+                        <td class="center"><h5>{{ zjxx.express_classification }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+
+                    {% if zjxx.sender_name %}
+                        <td class="center"><h5>{{ zjxx.sender_name }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+
+                    {% if zjxx.sender_phone %}
+                        <td class="center"><h5>{{ zjxx.sender_phone }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+
+                    {% if zjxx.sender_address %}
+                        <td class="center"><h5>{{ zjxx.sender_address }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+
+                    {% if zjxx.reciver_name %}
+                        <td class="center"><h5>{{ zjxx.reciver_name }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+
+                    {% if zjxx.reciver_phone %}
+                        <td class="center"><h5>{{ zjxx.reciver_phone }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+
+                    {% if zjxx.reciver_address %}
+                        <td class="center"><h5>{{ zjxx.reciver_address }}</td>
+                    {% else %}
+                        <td class="center"><h5>--</td>
+                    {% endif%}
+                    
+                    <td class="center">
+                        <a class="icon-wrench" title="修改" onclick="update_kdxx({{ zjxx.id }});" ></a>
+                        <a class="icon-remove" title="删除" onclick="del_kdxx({{ zjxx.id }});" ></a>
+                    </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+        
+    </div><!--/span-->
+    </div><!--/row-->
+    {% else %}
+        {{ xyxx }}
+    {% endif %}
+    
+</body>
+</html>

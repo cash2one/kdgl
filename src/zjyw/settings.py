@@ -97,6 +97,7 @@ FILES_DIR = os.path.join( BASE_DIR , 'modules')
 STATIC_URL = '/static/'
 
 STATIC_DIR =os.path.join( BASE_DIR, 'static' )  # url
+
 TEMPLATE_DIR = os.path.join( BASE_DIR, 'templates' )
 
 TEMPLATE_DIRS = (  

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <!-- start: Meta -->
+    <meta charset="UTF-8">
+    <title>快递管理系统</title>
+    <meta name="description" content="zjyw">
+    <meta name="author" content="cdg">
+    <meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <!-- end: Meta -->
+    
+    <!-- start: Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- end: Mobile Specific -->
+    
+    <!-- start: CSS -->
+    <link id="bootstrap-style" href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link id="base-style" href="/css/style.css" rel="stylesheet">
+    <link id="base-style-responsive" href="/css/style-responsive.css" rel="stylesheet">
+
+    <script src="/js/laydate/laydate.js" charset="UTF-8"></script>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <!-- end: Favicon -->
+</head>
+
+<body>
+    <div class="row-fluid sortable" id='edit'>
+            <div class="box-header" data-original-title>
+                <h2><i class="halflings-icon edit"></i><span class="break"></span>编辑信息</h2>
+            </div>
+
+            <div class="box-content">
+                <div class="form-horizontal">
+                    <div class="control-group success">
+                        <label class="control-label" for="selectError3">快递单号: </label> &nbsp&nbsp
+                        <input  id="express_number" type="text" placeholder="快递单号" value="{{ express_number }}">
+                    </div>
+                    <div class="control-group success"  id="date1" style="display:block;" >
+                        <label class="control-label">快递日期时间:</label>&nbsp&nbsp
+                        <input id='created_at' onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="{{ created_at }}">
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="circle">快递种类:</label>&nbsp&nbsp
+                          <select id="express_classification">
+                            <option value='0'>小包</option>
+                            <option value='1'>中包</option>
+                            <option value='2'>大包</option>
+                            <option value='3'>特大包</option>
+                          </select>
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="circle">快递状态:</label>&nbsp&nbsp
+                          <select id="express_status">
+                            <option value='0'>待发货</option>
+                            <option value='1'>在路上</option>
+                            <option value='2'>待查收</option>
+                            <option value='3'>已查收</option>
+                          </select>
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="selectError3">发件人姓名:</label>&nbsp&nbsp
+                        <input  id="sender_name" type="text" placeholder="请输入发件人姓名" value="{{ sender_name }}">
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="selectError3">发件人联系方式: </label>&nbsp&nbsp
+                        <input  id="sender_phone" type="text" placeholder="请输入11位手机号" value="{{ sender_phone }}">
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="selectError3">发件人地址: </label>&nbsp&nbsp
+                        <input  id="sender_address" type="text" placeholder="请输入发件人地址" value="{{ sender_address }}">
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="selectError3">收件人姓名: </label>&nbsp&nbsp
+                        <input  id="reciver_name" type="text" placeholder="请输入收件人姓名" value="{{ reciver_name }}">
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="selectError3">收件人联系方式: </label>&nbsp&nbsp
+                        <input  id="reciver_phone" type="text" placeholder="请输入11位手机号" value="{{ reciver_phone }}">
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="selectError3">收件人地址: </label>&nbsp&nbsp
+                        <input  id="reciver_address" type="text" placeholder="请输入收件人地址" value="{{ reciver_address }}">
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="selectError3">快递费: </label>&nbsp&nbsp
+                        <input  id="express_money" type="text" placeholder="0.00" value="{{ express_money }}">
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" for="selectError3">快递员编号: </label>&nbsp&nbsp
+                        <input  id="express_user_id" type="text" placeholder="编号" value="{{ express_user_id }}">
+                    </div>
+                    <div class="control-group">
+                      <div class="form-actions">
+                         <button class="btn btn-primary" onclick="kd_edit();" >确定</button>
+                         <button class="btn" onclick="" >取消</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div><!--/span-->            
+</body>
+</html>

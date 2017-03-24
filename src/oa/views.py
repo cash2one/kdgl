@@ -48,28 +48,6 @@ def login_view(request):
             login(request, user)
             request.session[ 'username' ] = username
             request.session[ 'password' ] = password
-#            #================================shanchu ==========================
-#            sql = "select * from AgentTask a where a.task_agent in(select b.group_agent from AgentTask a,AgentGroupInfo b where b.group_id=a.task_group group by b.group_id)"
-#            sql1 = "select b.group_agent from AgentTask a,AgentGroupInfo b where b.group_id=a.task_group group by b.group_id"
-#            #sql2 = "select * from AgentTask a where a.task_agent in()"%;
-#            with myapi.connection() as con:
-#                cur = con.cursor()
-#                cur.execute(sql1)
-#                rs1 = cur.fetchall()
-#                log.info( "login", '===========rs1==================%s',rs1 )
-#                ls=()
-#                for l in rs1:
-#                    log.info( "login", '===========len==================%s',repr(len(l[0])) )
-#                    sql2 = "select task_id, a.task_type, a.task_module, a.task_circle, a.task_start_time from AgentTask a where a.task_agent in %s and a.task_group is not null and a.task_state='2'" % ( '11111', (repr(tuple(l[0].split(','))) if len(l[0])!=8 else "(%s)"%l[0]) )
-#                    log.info( "login", '===========sql2==================%s', sql2)
-#                    cur.execute(sql2)
-#                    rs2 = cur.fetchall()
-#                    log.info( "login", '================rs2=============%s',repr(rs2) )
-#                log.info( "login", '===========ls==================%s', ls)
-#                cur.execute(sql)
-#                rs = cur.fetchall()
-#                log.info( "login", '================rs=============%s',repr(rs) )
-#            #================================shanchu ==========================
             log.info( "login", '会话session：【%s】', repr(request) )
             log.info( "login", '用户【%s】登录验证成功', username)
             # 转到成功页面
@@ -93,15 +71,7 @@ def main_view(request):
             return HttpResponseRedirect('/')
         username = request.session.get('username').encode('utf8')
         log.info( "login", '来自session的用户名：%s', username )
-        ls = []
-        sql = "select * from AgentInfo "
-        with myapi.connection() as con:
-            cur = con.cursor()
-            rs = myapi.sql_execute(cur, sql)
-            while rs.next():
-                rs_lst = rs.to_dict()
-                ls.append(rs_lst)
-        return render_to_response( 'index.html', {'zjxx_dic':ls}, context_instance=RequestContext(request) )
+        return render_to_response( 'index.html', {}, context_instance=RequestContext(request) )
     except Exception, e :
         log.exception( 'login', '后台函数[login_view]执行错误:%s', str( e ) )
         return render_to_response( 'index.html', {'xyxx':'后台函数[main_view]执行错误:%s' % str( e )}, context_instance=RequestContext(request) )
