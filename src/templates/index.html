@@ -38,16 +38,6 @@
     <script src="/js/jquery-ui-1.10.0.custom.min.js"></script>
     <script src='/js/jquery.dataTables.min.js'></script>
 
-
-   <!-- start: CSS -->
-    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-    <!-- end: CSS -->
-    <script type="text/javascript" src="/js/jquery-1.8.3.min.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-    <script src="/js/laydate/laydate.js" charset="UTF-8"></script>
-    <!--<script src="/js/myjquary.js"></script>-->
     <!-- start: Favicon -->
     <link rel="shortcut icon" href="/img/favicon.ico">
     <!-- end: Favicon -->
@@ -123,10 +113,72 @@
             return false;
         }
     }
-    //删除任务
+    //删除
     function del_kdxx(id){
         if ( window.confirm( "确定删除此条信息？" ) ){
             rr = sync_post( "/kdxx_del/" , {"id":id} );
+            if ( rr.ret ) {
+                json = rr.val;
+                if(json.xym=='000000'){
+                    alert(json.xyxx);
+                    window.location.reload(); 
+                    return true;
+                }else{
+                    alert(json.xyxx);
+                    return false;
+                }
+            } else {
+                alert("操作失败，请联系管理员");
+                return false;
+            }
+        }
+    }
+    //新增
+    function kd_add_tz(id, type){
+        url = '/add_kdxx_tz/';
+        var winOpen =window.showModalDialog(url,window,'dialogHeight:550px, dialogLeft:550px, dialogTop:100px, dialogWidth:600px, status:0, edge:sunken'); 
+        if(!has_showModalDialog) return;//chrome 返回 因为showModalDialog是阻塞的 open不一样;  
+    }
+    //编辑
+    function update_kdxx(id, type, express_number, created_at, express_classification, express_status, sender_name, sender_phone, sender_address, reciver_name, reciver_phone, reciver_address, express_money, express_user_id,shelf_number){
+        url = '/update_kdxx/?id='+id +'&type='+type +'&express_number='+express_number +'&created_at='+created_at +'&express_classification='+express_classification+'&express_status='+express_status+'&sender_name='+sender_name+'&sender_phone='+sender_phone+'&sender_address='+sender_address+'&reciver_name='+reciver_name+'&reciver_phone='+reciver_phone+'&reciver_address='+reciver_address+'&express_money='+express_money+'&express_user_id='+express_user_id+'&shelf_number='+shelf_number;
+        var winOpen =window.showModalDialog(url,window,'dialogHeight:550px, dialogLeft:550px, dialogTop:100px, dialogWidth:600px, status:0, edge:sunken'); 
+        if(!has_showModalDialog) return;//chrome 返回 因为showModalDialog是阻塞的 open不一样;  
+    }
+
+    //用户信息
+    function user_info(){
+        rr = sync_post( "/user_info/" , {} );
+        if ( rr.ret ) {
+            json = rr.val;
+            if(json.xym=='000000'){
+                content.innerHTML = json.cont
+                return true;
+            }else{
+                alert(json.xyxx);
+                return false;
+            }
+        } else {
+            alert("操作失败，请联系管理员");
+            return false;
+        }
+    }
+    //新增
+    function user_add_tz(id, type){
+        url = '/add_user_tz/';
+        var winOpen =window.showModalDialog(url,window,'dialogHeight:350px, dialogLeft:550px, dialogTop:100px, dialogWidth:600px, status:0, edge:sunken'); 
+        if(!has_showModalDialog) return;//chrome 返回 因为showModalDialog是阻塞的 open不一样;  
+    }
+    //编辑
+    function update_user(id, username, number, phone, performance){
+        url = '/update_user/?id='+id +'&username='+username +'&number='+number +'&phone='+phone +'&performance='+performance;
+        var winOpen =window.showModalDialog(url,window,'dialogHeight:350px, dialogLeft:550px, dialogTop:100px, dialogWidth:600px, status:0, edge:sunken'); 
+        if(!has_showModalDialog) return;//chrome 返回 因为showModalDialog是阻塞的 open不一样;  
+    }
+    //删除
+    function del_user(id){
+        if ( window.confirm( "确定删除此条信息？" ) ){
+            rr = sync_post( "/user_del/" , {"id":id} );
             if ( rr.ret ) {
                 json = rr.val;
                 if(json.xym=='000000'){
@@ -143,9 +195,10 @@
             }
         }
     }
-    //更新快递详情
-    function update_kdxx(id){
-        rr = sync_post( "/update_kdxx/" , {'id':id} );
+
+    //文件导出
+    function file_download_tz(){
+        rr = sync_post( "/file_download_tz/" , {} );
         if ( rr.ret ) {
             json = rr.val;
             if(json.xym=='000000'){
@@ -160,364 +213,6 @@
             return false;
         }
     }
-    //编辑快递信息
-        function kd_edit(){
-            var id = '{{ id }}';
-            var express_number = document.getElementById("express_number");
-            var created_at = document.getElementById("created_at");
-            var express_classification = document.getElementById("express_classification");
-            var express_status = document.getElementById("express_status");
-            var sender_name = document.getElementById("sender_name");
-            var sender_phone = document.getElementById("sender_phone");
-            var sender_address = document.getElementById("sender_address");
-            var reciver_name = document.getElementById("reciver_name");
-            var reciver_phone = document.getElementById("reciver_phone");
-            var reciver_address = document.getElementById("reciver_address");
-            var express_money = document.getElementById("express_money");
-            var express_user_id = document.getElementById("express_user_id");
-            
-            if( created_at.value=='null'||created_at.value==''){
-                alert("请填写快递日期时间！");
-                created_at.focus();
-                return false;
-            }
-            if( express_number.value=='null'||express_number.value==''){
-                alert("请填写快递单号！");
-                express_number.focus();
-                return false;
-            }
-            if( express_classification.value=='null'||express_classification.value==''){
-                alert("请选择快递分类！");
-                express_classification.focus();
-                return false;
-            }
-            if( express_status.value=='null'||express_status.value==''){
-                alert("请选择快递状态！");
-                express_status.focus();
-                return false;
-            }
-            if( sender_name.value=='null'||sender_name.value==''){
-                alert("请填写发件人姓名！");
-                sender_name.focus();
-                return false;
-            }
-            if( sender_phone.value=='null'||sender_phone.value==''){
-                alert("请填写发件人联系方式！");
-                sender_phone.focus();
-                return false;
-            }
-            if( sender_address.value=='null'||sender_address.value==''){
-                alert("请填写发件人地址！");
-                sender_address.focus();
-                return false;
-            }
-            if( reciver_name.value=='null'||reciver_name.value==''){
-                alert("请填写收件人姓名！");
-                reciver_name.focus();
-                return false;
-            }
-            if( reciver_phone.value=='null'||reciver_phone.value==''){
-                alert("请填写收件人联系方式！");
-                reciver_phone.focus();
-                return false;
-            }
-            if( reciver_address.value=='null'||reciver_address.value==''){
-                alert("请填写收件人地址！");
-                reciver_address.focus();
-                return false;
-            }
-            if( express_money.value=='null'||express_money.value==''){
-                alert("请填写快递费！");
-                express_money.focus();
-                return false;
-            }
-            if( express_user_id.value=='null'||express_user_id.value==''){
-                alert("请填写快递员编号！");
-                express_user_id.focus();
-                return false;
-            }
-            rr = sync_post( "/kd_edit/" , {"id": id, "express_classification": express_classification.value, "express_user_id": express_user_id.value, "sender_name": sender_name.value, "express_money":express_money.value, "express_number": express_number.value, "express_status": express_status.value, "sender_address": sender_address.value, "reciver_name": reciver_name.value, "sender_phone": sender_phone.value, "reciver_address": reciver_address.value, "shelf_number": shelf_number.value, "reciver_phone": reciver_phone.value, "type": type.value, "created_at": created_at.value } );
-            if ( rr.ret ) {
-                json = rr.val;
-                if(json.xym=='000000'){
-                    alert(json.xyxx);
-                    window.opener.location.reload(); 
-                    window.close();
-                    return true;
-                }else{
-                    alert(json.xyxx);
-                    return false;
-                }
-            } else {
-                alert("操作失败，请联系管理员");
-                return false;
-            }
-        }
-//    //主机分组
-//     function get_zjfz(){
-//         rr = sync_post( "/zjfz/" , {} );
-//         if ( rr.ret ) {
-//             json = rr.val;
-//             if(json.xym=='000000'){
-//                 content.innerHTML = json.cont
-//                 return true;
-//             }else{
-//                 alert(json.xyxx);
-//                 return false;
-//             }
-//         } else {
-//             alert("操作失败，请联系管理员");
-//             return false;
-//         }
-//     }
-//     //保存分组
-//     function save_fz(){
-//         zj = document.getElementById('zj')
-//         zjz = document.getElementById('groupInput')
-//         if(zjz.value=="输入或选择"){
-//             alert("请输入或选择主机组！");
-//             zjz.focus();
-//             return false;
-//         }
-//         if(zj.value==""){
-//             alert("请选择主机！");
-//             return false;
-//         }
-//         rr = sync_post( "/save_fz/" , {"zjz":zjz.value, "zj":zj.value} );
-//         if ( rr.ret ) {
-//             json = rr.val;
-//             if(json.xym=='000000'){
-//                 alert(json.xyxx);
-//                 window.location.href = window.location.href
-//                 return true;
-//             }else{
-//                 alert(json.xyxx);
-//                 return false;
-//             }
-//         } else {
-//             alert("操作失败，请联系管理员");
-//             return false;
-//         }
-//     }
-
-//     //任务信息
-//     function get_rwxx(zjip){
-//         rr = sync_post( "/rwxx/" , {} );
-//         if ( rr.ret ) {
-//             json = rr.val;
-//             if(json.xym=='000000'){
-//                 content.innerHTML = json.cont
-//                 return true;
-//             }else{
-//                 alert(json.xyxx);
-//                 return false;
-//             }
-//         } else {
-//             alert("操作失败，请联系管理员");
-//             return false;
-//         }
-//     }
-    
-//     //任务定制改变主机组触发的函数
-//     function change(zjz){
-//       arr = zjz.split("+");
-//       zj = '主机'+arr[0].replace('|','、主机');
-//       mb = arr[1];
-//       document.getElementById('input_ZJ').value = zj;
-//       var ss = document.getElementById("select_module");
-//       if(mb){
-//             for(i=0;i<ss.options.length;i++){
-//                  if(ss.options[i].value == mb ){
-//                         ss.options[i].selected = true;
-//                  }
-//             }
-//         }
-//      }
-     
-    
-//     //告警信息
-//     function get_gjxx(){
-//         rr = sync_post( "/gjxx/" , {} );
-//         if ( rr.ret ) {
-//             json = rr.val;
-//             if(json.xym=='000000'){
-//                 content.innerHTML = json.cont
-//                 return true;
-//             }else{
-//                 alert(json.xyxx);
-//                 return false;
-//             }
-//         } else {
-//             alert("操作失败，请联系管理员");
-//             return false;
-//         }
-//     }
-//     //屏蔽告警信息
-//     function ping_warn(warn_type){
-//         if ( window.confirm( "确定对此类告警信息执行屏蔽？" ) ){
-//         rr = sync_post( "/pb_gjxx/" , {"warn_type":warn_type} );
-//         if ( rr.ret ) {
-//             json = rr.val;
-//             if(json.xym=='000000'){
-//                 alert(json.xyxx);
-//                 get_gjxx();
-//                 return true;
-//             }else{
-//                 alert(json.xyxx);
-//                 return false;
-//             }
-//         } else {
-//             alert("操作失败，请联系管理员");
-//             return false;
-//         }
-//         }
-//     }
-
-    
-//     //启动任务
-//     function task_start(id){
-//         if ( window.confirm( "确定运行此任务？" ) ){
-//             rr = sync_post( "/task_start/" , {"id":id} );
-//             if ( rr.ret ) {
-//                 json = rr.val;
-//                 if(json.xym=='000000'){
-//                     alert(json.xyxx);
-//                     window.location.href = window.location.href
-//                     return true;
-//                 }else{
-//                     alert(json.xyxx);
-//                     return false;
-//                 }
-//             } else {
-//                 alert("操作失败，请联系管理员");
-//                 return false;
-//             }
-//         }
-//     }
-//     //暂停任务
-//     function task_stop(id){
-//         if ( window.confirm( "确定停止此任务？" ) ){
-//             rr = sync_post( "/task_stop/" , {"id":id} );
-//             if ( rr.ret ) {
-//                 json = rr.val;
-//                 if(json.xym=='000000'){
-//                     alert(json.xyxx);
-//                     window.location.href = window.location.href
-//                     return true;
-//                 }else{
-//                     alert(json.xyxx);
-//                     return false;
-//                 }
-//             } else {
-//                 alert("操作失败，请联系管理员");
-//                 return false;
-//             }
-//         }
-//     }
-//     //删除任务
-//     function task_del(id){
-//         if ( window.confirm( "确定删除此任务？" ) ){
-//             rr = sync_post( "/task_del/" , {"id":id} );
-//             if ( rr.ret ) {
-//                 json = rr.val;
-//                 if(json.xym=='000000'){
-//                     alert(json.xyxx);
-//                     window.location.href = window.location.href
-//                     return true;
-//                 }else{
-//                     alert(json.xyxx);
-//                     return false;
-//                 }
-//             } else {
-//                 alert("操作失败，请联系管理员");
-//                 return false;
-//             }
-//         }
-//     }
-//     //添加主机任务
-//     function task_add_tz(){
-//         url = '/task_add_tz/';
-//         var winOpen =window.showModalDialog(url,window,'dialogHeight:550px, dialogLeft:550px, dialogTop:100px, dialogWidth:600px, status:0, edge:sunken'); 
-//         if(!has_showModalDialog) return;//chrome 返回 因为showModalDialog是阻塞的 open不一样;  
-//     }
-//     //编辑主机任务
-//     function task_edit_tz(id,select_module,circle,start_time,state,rwmc,rwms){
-//         //alert(typeof start_time);
-//         url = '/task_edit_tz/?circle='+String(circle) +'&start_time='+String(start_time) +'&state='+String(state) +'&select_module='+String(select_module) +'&id='+id+'&rwmc='+String(rwmc)+'&rwms='+String(rwms);
-//         var winOpen =window.showModalDialog(url,window,'dialogHeight:550px, dialogLeft:550px, dialogTop:100px, dialogWidth:600px, status:0, edge:sunken'); 
-//         if(!has_showModalDialog) return;//chrome 返回 因为showModalDialog是阻塞的 open不一样;  
-//     }
-
-//     function moveOption(e1, e2){
-//         try{
-//             for(var i=0;i<e1.options.length;i++){
-//                 if(e1.options[i].selected){
-//                     var e = e1.options[i];
-//                     e2.options.add(new Option(e.text, e.value));
-//                     e1.remove(i);
-//                     i=i-1
-//                 }
-//             }
-//             document.myform.zj.value=getvalue1(document.myform.list2);
-//         }
-//         catch(e){}
-//     }
-//     function getvalue1(geto){
-//         var allvalue = "";
-//         for(var i=0;i<geto.options.length;i++){
-//             allvalue +=geto.options[i].value + ",";
-//         }
-//         return allvalue;
-//     }
-    
-//     function getValue(value,inputId){
-//         var obj=document.getElementById('list2');
-//         obj.options.length=0;//清空select标签的值
-//         var zjz_agent = value.split("+")[0]
-//         var zjz_name = value.split("+")[1]
-//         var agent_array = value.split("+")[2]
-//         document.getElementById(inputId).value=zjz_name;
-//         zj = zjz_agent.split('|');
-//         document.getElementById('zj').value = zj;
-// //        for( var b=0, len = zj.length; b<len; b++ ){
-// //            for(var a=0, len = 3;a<len;a++){
-// //                alert(zj[b]);
-// //                alert(agent_array[a]);
-// //                alert(zj[b]==agent_array[a]['agent_id']);
-// //                if(zj[b]==agent_array[a]['agent_id']){
-// //                    zj[b] = agent_array[a]['agent_id'] +'|'+ agent_array[a]['agent_name']
-// //                }
-// //            }
-// //        }
-//         var $sel = $('#list2'); 
-//         for(var i=0, len = zj.length;i<len;i++){  
-//             $sel.append('<option value="'+zj[i]+'">'+zj[i]+'</option>'); 
-//         }
-//      }
-    
-//     //跳转到首页
-//     function select_firstpage(){
-//         rr = sync_post( "/main/" , {} );
-//         if ( rr.ret ) {
-//             json = rr.val;
-//             if(json.xym=='000000'){
-//                 alert(json.xyxx);
-//                 window.location.href = window.location.href
-//                 return true;
-//             }else{
-//                 alert(json.xyxx);
-//                 return false;
-//             }
-//         } else {
-//             alert("操作失败，请联系管理员");
-//             return false;
-//         }
-//     }
-//     function zjxx_checkinfo(task_id){
-//         url = '/zjxx_checkinfo/?task_id=' + task_id;
-//         var winOpen =window.showModalDialog(url,window,'edge:raised;scroll:0;status:0;help:0;resizable:1;dialogWidth:700px;dialogHeight:750px;dialogLeft:400px, dialogTop:20px;'); 
-//         if(!has_showModalDialog) return;//chrome 返回 因为showModalDialog是阻塞的 open不一样;  
-//     }
     </script>
     
     
@@ -542,7 +237,7 @@
                         <!-- start: User Dropdown -->
                         <li class="dropdown">
                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="halflings-icon white user"></i> xxx
+                                <i class="halflings-icon white user"></i> {{username}}
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
@@ -572,20 +267,19 @@
                     <li>
                         <a class="dropmenu" href="table.html"><i class="icon-folder-close-alt"></i><span class="hidden-tablet"> 快递管理</span></a>
                         <ul>
-                            <li><a class="submenu" onclick="input_info()"><i class="icon-file-alt"></i><span class="hidden-tablet"> 快递发送</span></a></li>
-                            <li><a class="submenu" onclick="get_info()"><i class="icon-file-alt"></i><span class="hidden-tablet"> 快递收取录入</span></a></li>
+                            <li><a class="submenu" onclick="input_info()"><i class="icon-file-alt"></i><span class="hidden-tablet"> 快递管理</span></a></li>
                         </ul>    
                     </li>
                     <li>
                         <a class="dropmenu" href="#"><i class="icon-folder-close-alt"></i><span class="hidden-tablet"> 员工信息管理</span></a>
                         <ul>
-                            <li><a class="submenu" onclick="get_rwxx()"><i class="icon-file-alt"></i><span class="hidden-tablet"> 员工信息列表</span></a></li>
+                            <li><a class="submenu" onclick="user_info()"><i class="icon-file-alt"></i><span class="hidden-tablet"> 员工信息列表</span></a></li>
                         </ul>    
                     </li>
                     <li>
                         <a class="dropmenu" href="#"><i class="icon-folder-close-alt"></i><span class="hidden-tablet"> 快递单导出</span></a>
                         <ul>
-                            <li><a class="submenu" onclick="get_gjxx()"><i class="icon-file-alt"></i><span class="hidden-tablet"> 快递单导出</span></a></li>
+                            <li><a class="submenu" onclick="file_download_tz()"><i class="icon-file-alt"></i><span class="hidden-tablet"> 快递单导出</span></a></li>
                         </ul>    
                     </li>
                 </ul>
@@ -602,7 +296,133 @@
                 <li><a>首页</a></li>
             </ul>
             <div class="box-content">
-                <h1><i class="icon-bell-alt"></i><span class="break"></span>欢迎进入快递管理系统</h1>
+                <table class="table table-striped table-bordered bootstrap-datatable datatable">
+                  <thead>
+                      <tr>
+                          <th>快递单号</th>
+                          <th>快递员ID</th>
+                          <th>快递费</th>
+                          <th>货架编号</th>
+                          <th>快递状态</th>
+                          <th>快递类型</th>
+                          <th>快递种类</th>
+                          <th>发件人</th>
+                          <th>发件人联系方式</th>
+                          <th>发件人地址</th>
+                          <th>收件人</th>
+                          <th>收件人联系方式</th>
+                          <th>收件人地址</th>
+                      </tr>
+                  </thead>   
+                  <tbody>
+                    {% for kd in kd_info %}
+                    <tr>
+                        <td class="center"><h5>{{ kd.express_number }}</td>
+                        
+                        {% if kd.express_user_id %}
+                            <td class="center"><h5>{{ kd.express_user_id }}</td>
+                        {% else %}
+                            <td class="center"><h5>--</td>
+                        {% endif%}
+                        
+                        {% if kd.express_money %}
+                            <td class="center"><h5>{{ kd.express_money }}</td>
+                        {% else %}
+                            <td class="center"><h5>--</td>
+                        {% endif%}
+                        
+                        {% if kd.shelf_number %}
+                            <td class="center"><h5>{{ kd.shelf_number }}</td>
+                        {% else %}
+                            <td class="center"><h5>--</td>
+                        {% endif%}
+
+                        <td class="center-block">
+                            <span class="label label-success">
+                            {% ifequal kd.express_status "0" %}
+                                待发货
+                            {% endifequal %}
+                            {% ifequal kd.express_status "1" %}
+                                在路上
+                            {% endifequal %}
+                            {% ifequal kd.express_status "2" %}
+                                待查收
+                            {% endifequal %}
+                            {% ifequal kd.express_status "3" %}
+                                已查收
+                            {% endifequal %}
+                            </span>
+                        </td>
+
+                        <td class="center-block">
+                            <span class="label label-success">
+                            {% ifequal kd.type  "1" %}
+                                发送快递
+                            {% endifequal %}
+                            {% ifequal kd.type  "2" %}
+                                接收快递
+                            {% endifequal %}
+                            </span>
+                        </td>
+
+
+                        <td class="center-block">
+                            <span class="label label-success">
+                            {% ifequal kd.express_classification "0" %}
+                                小包
+                            {% endifequal %}
+                            {% ifequal kd.express_classification "1" %}
+                                中包
+                            {% endifequal %}
+                            {% ifequal kd.express_classification "2" %}
+                                大包
+                            {% endifequal %}
+                            {% ifequal kd.express_classification "3" %}
+                                特大包
+                            {% endifequal %}
+                            </span>
+                        </td>
+
+                        {% if kd.sender_name %}
+                            <td class="center"><h5>{{ kd.sender_name }}</td>
+                        {% else %}
+                            <td class="center"><h5>--</td>
+                        {% endif%}
+
+                        {% if kd.sender_phone %}
+                            <td class="center"><h5>{{ kd.sender_phone }}</td>
+                        {% else %}
+                            <td class="center"><h5>--</td>
+                        {% endif%}
+
+                        {% if kd.sender_address %}
+                            <td class="center"><h5>{{ kd.sender_address }}</td>
+                        {% else %}
+                            <td class="center"><h5>--</td>
+                        {% endif%}
+
+                        {% if kd.reciver_name %}
+                            <td class="center"><h5>{{ kd.reciver_name }}</td>
+                        {% else %}
+                            <td class="center"><h5>--</td>
+                        {% endif%}
+
+                        {% if kd.reciver_phone %}
+                            <td class="center"><h5>{{ kd.reciver_phone }}</td>
+                        {% else %}
+                            <td class="center"><h5>--</td>
+                        {% endif%}
+
+                        {% if kd.reciver_address %}
+                            <td class="center"><h5>{{ kd.reciver_address }}</td>
+                        {% else %}
+                            <td class="center"><h5>--</td>
+                        {% endif%}
+                        
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
             </div>
         </div>
     </div>

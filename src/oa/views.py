@@ -1,9 +1,4 @@
 # coding: utf8
-# 功能描述 ：  登录及首页信息展示
-# 作　　者 ：  成德功
-# 日　　期 ：  2016/5/30
-# 版　　本 ：  V1.00
-# 更新履历 ：  V1.00 2016/5/17 成德功 创建.
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -71,7 +66,25 @@ def main_view(request):
             return HttpResponseRedirect('/')
         username = request.session.get('username').encode('utf8')
         log.info( "login", '来自session的用户名：%s', username )
-        return render_to_response( 'index.html', {}, context_instance=RequestContext(request) )
+        content={}
+        ls=[]
+        content['xym'] = '0'
+        sql = "select * from express_info order by id desc"
+        with myapi.connection() as con:
+            cur = con.cursor()
+            rs = myapi.sql_execute(cur, sql)
+            while rs.next():
+                rs_lst = rs.to_dict()
+                ls.append(rs_lst)
+        if ls:
+            log.info( "login",  repr(ls))
+            content['xym'] = '000000'
+            return render_to_response( 'index.html', {'kd_info':ls,'username':username}, context_instance=RequestContext(request) )
+        else:
+            # 返回错误信息
+            log.info( "login", '快递信息不存在')
+            content['xyxx'] = '快递信息不存在！'
+            return render_to_response( 'index.html', content, content_type='application/json' )
     except Exception, e :
-        log.exception( 'login', '后台函数[login_view]执行错误:%s', str( e ) )
+        log.exception( 'login', '后台函数[main_view]执行错误:%s', str( e ) )
         return render_to_response( 'index.html', {'xyxx':'后台函数[main_view]执行错误:%s' % str( e )}, context_instance=RequestContext(request) )

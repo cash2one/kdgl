@@ -25,37 +25,21 @@ urlpatterns = patterns('',
     url(r'^update_kdxx/$', 'oa.zjxx.update_kdxx_view'), 
     url(r'^kdxx_del/$', 'oa.zjxx.kdxx_del_view'), 
     url(r'^kd_edit/$', 'oa.zjxx.kd_edit_view'),
-    url(r'^save_fz/$', 'oa.zjxx.save_zjfz_view'),
-    url(r'^zjid_made/$', 'oa.zjxx.zjid_made_view'), 
-    url(r'^zjxx_checkinfo/$', 'oa.zjxx.zjxx_checkinfo_view'),
-    url(r'^zjxx_check_detail_info/$', 'oa.zjxx.zjxx_check_detail_info_view'),
-    
-    # 任务管理部分
-    url(r'^rwxx/$', 'oa.rwxx.rwxx_view'),
-    url(r'^rwdz/$', 'oa.rwxx.rwdz_view'),
-    url(r'^save_rwdz/$', 'oa.rwxx.save_rwdz_view'),
-    url(r'^task_start/$', 'oa.rwxx.task_start_view'),
-    url(r'^task_stop/$', 'oa.rwxx.task_stop_view'),
-    url(r'^task_del/$', 'oa.rwxx.task_del_view'),
-    url(r'^task_add_tz/$', 'oa.rwxx.task_add_tz_view'),
-    url(r'^task_edit_tz/$', 'oa.rwxx.task_edit_tz_view'),
-    url(r'^task_add/$', 'oa.rwxx.task_add_view'),
-    url(r'^task_edit/$', 'oa.rwxx.task_edit_view'),
-    
-    # 告警管理部分
-    url(r'^gjxx/$', 'oa.gjxx.gjxx_view'),
-    url(r'^pb_gjxx/$', 'oa.gjxx.pb_gjxx_view'),
-    url(r'^gjxx_pb/$', 'oa.gjxx.gjxx_pb_view'),
-    url(r'^no_pb_gjxx/$', 'oa.gjxx.no_pb_gjxx_view'),
-    
-    #=====================服务端部分===================
-    # 任务查询
-    url(r'^task/$', 'oa.zjserver.task_view'),
-    # 告警信息上送
-    url(r'^alarm/$', 'oa.zjserver.alarm_view'),
-    # 体检信息上送
-    url(r'^check/$', 'oa.zjserver.check_view'),
-    # 体检信息上送
-    url(r'^host_info/$', 'oa.zjserver.host_view'), 
+    url(r'^add_kdxx_tz/$', 'oa.zjxx.add_kdxx_tz_view'),
+    url(r'^add_kdxx/$', 'oa.zjxx.add_kdxx_view'),
+
+    # 用户信息管理
+    url(r'^user_info/$', 'oa.zjxx.user_info_view'), 
+    url(r'^update_user/$', 'oa.zjxx.update_user_view'), 
+    url(r'^user_del/$', 'oa.zjxx.user_del_view'), 
+    url(r'^user_edit/$', 'oa.zjxx.user_edit_view'),
+    url(r'^add_user_tz/$', 'oa.zjxx.add_user_tz_view'),
+    url(r'^add_user/$', 'oa.zjxx.add_user_view'),
+
+    #导出文件
+    url(r'^file_download_tz/$', 'oa.zjxx.file_download_tz_view'),
+    url(r'^download/$', 'oa.zjxx.download_view'),
+ 
+ 
 
 )

@@ -33,6 +33,7 @@
                 }  
         
     </style>
+
 </head>
 
 <body>
@@ -44,6 +45,8 @@
 
         <div class="box-header" data-original-title>
             <h2><i class="icon-reorder"></i><span class="break"></span>快递信息</h2>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#" onclick="kd_add_tz();">添加快递信息</a>
         </div>     
         <div class="box-content">
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
@@ -66,85 +69,113 @@
                   </tr>
               </thead>   
               <tbody>
-                {% for zjxx in kd_info %}
+                {% for kd in kd_info %}
                 <tr>
-                    <td class="center"><h5>{{ zjxx.express_number }}</td>
+                    <td class="center"><h5>{{ kd.express_number }}</td>
                     
-                    {% if zjxx.express_user_id %}
-                        <td class="center"><h5>{{ zjxx.express_user_id }}</td>
-                    {% else %}
-                        <td class="center"><h5>--</td>
-                    {% endif%}
-                    
-                    {% if zjxx.express_money %}
-                        <td class="center"><h5>{{ zjxx.express_money }}</td>
+                    {% if kd.express_user_id %}
+                        <td class="center"><h5>{{ kd.express_user_id }}</td>
                     {% else %}
                         <td class="center"><h5>--</td>
                     {% endif%}
                     
-                    {% if zjxx.shelf_number %}
-                        <td class="center"><h5>{{ zjxx.shelf_number }}</td>
+                    {% if kd.express_money %}
+                        <td class="center"><h5>{{ kd.express_money }}</td>
                     {% else %}
                         <td class="center"><h5>--</td>
                     {% endif%}
                     
-                    {% if zjxx.express_status %}
-                        <td class="center"><h5>{{ zjxx.express_status }}</td>
+                    {% if kd.shelf_number %}
+                        <td class="center"><h5>{{ kd.shelf_number }}</td>
                     {% else %}
                         <td class="center"><h5>--</td>
                     {% endif%}
 
-                    {% if zjxx.type %}
-                        <td class="center"><h5>{{ zjxx.type }}</td>
+                    <td class="center-block">
+                        <span class="label label-success">
+                        {% ifequal kd.express_status "0" %}
+                            待发货
+                        {% endifequal %}
+                        {% ifequal kd.express_status "1" %}
+                            在路上
+                        {% endifequal %}
+                        {% ifequal kd.express_status "2" %}
+                            待查收
+                        {% endifequal %}
+                        {% ifequal kd.express_status "3" %}
+                            已查收
+                        {% endifequal %}
+                        </span>
+                    </td>
+
+                    <td class="center-block">
+                        <span class="label label-success">
+                        {% ifequal kd.type  "1" %}
+                            发送快递
+                        {% endifequal %}
+                        {% ifequal kd.type  "2" %}
+                            接收快递
+                        {% endifequal %}
+                        </span>
+                    </td>
+
+
+                    <td class="center-block">
+                        <span class="label label-success">
+                        {% ifequal kd.express_classification "0" %}
+                            小包
+                        {% endifequal %}
+                        {% ifequal kd.express_classification "1" %}
+                            中包
+                        {% endifequal %}
+                        {% ifequal kd.express_classification "2" %}
+                            大包
+                        {% endifequal %}
+                        {% ifequal kd.express_classification "3" %}
+                            特大包
+                        {% endifequal %}
+                        </span>
+                    </td>
+
+                    {% if kd.sender_name %}
+                        <td class="center"><h5>{{ kd.sender_name }}</td>
                     {% else %}
                         <td class="center"><h5>--</td>
                     {% endif%}
 
-                    {% if zjxx.express_classification %}
-                        <td class="center"><h5>{{ zjxx.express_classification }}</td>
+                    {% if kd.sender_phone %}
+                        <td class="center"><h5>{{ kd.sender_phone }}</td>
                     {% else %}
                         <td class="center"><h5>--</td>
                     {% endif%}
 
-                    {% if zjxx.sender_name %}
-                        <td class="center"><h5>{{ zjxx.sender_name }}</td>
+                    {% if kd.sender_address %}
+                        <td class="center"><h5>{{ kd.sender_address }}</td>
                     {% else %}
                         <td class="center"><h5>--</td>
                     {% endif%}
 
-                    {% if zjxx.sender_phone %}
-                        <td class="center"><h5>{{ zjxx.sender_phone }}</td>
+                    {% if kd.reciver_name %}
+                        <td class="center"><h5>{{ kd.reciver_name }}</td>
                     {% else %}
                         <td class="center"><h5>--</td>
                     {% endif%}
 
-                    {% if zjxx.sender_address %}
-                        <td class="center"><h5>{{ zjxx.sender_address }}</td>
+                    {% if kd.reciver_phone %}
+                        <td class="center"><h5>{{ kd.reciver_phone }}</td>
                     {% else %}
                         <td class="center"><h5>--</td>
                     {% endif%}
 
-                    {% if zjxx.reciver_name %}
-                        <td class="center"><h5>{{ zjxx.reciver_name }}</td>
-                    {% else %}
-                        <td class="center"><h5>--</td>
-                    {% endif%}
-
-                    {% if zjxx.reciver_phone %}
-                        <td class="center"><h5>{{ zjxx.reciver_phone }}</td>
-                    {% else %}
-                        <td class="center"><h5>--</td>
-                    {% endif%}
-
-                    {% if zjxx.reciver_address %}
-                        <td class="center"><h5>{{ zjxx.reciver_address }}</td>
+                    {% if kd.reciver_address %}
+                        <td class="center"><h5>{{ kd.reciver_address }}</td>
                     {% else %}
                         <td class="center"><h5>--</td>
                     {% endif%}
                     
                     <td class="center">
-                        <a class="icon-wrench" title="修改" onclick="update_kdxx({{ zjxx.id }});" ></a>
-                        <a class="icon-remove" title="删除" onclick="del_kdxx({{ zjxx.id }});" ></a>
+                        <a class="icon-wrench" title="修改" onclick="update_kdxx('{{ kd.id }}','{{ kd.type }}','{{ kd.express_number }}','{{ kd.created_at }}','{{ kd.express_classification }}','{{ kd.express_status }}','{{ kd.sender_name }}','{{ kd.sender_phone }}','{{ kd.sender_address }}','{{ kd.reciver_name }}','{{ kd.reciver_phone }}','{{ kd.reciver_address }}','{{ kd.express_money }}','{{ kd.express_user_id }}','{{ kd.shelf_number }}');" ></a>
+                        <a class="icon-remove" title="删除" onclick="del_kdxx({{ kd.id }});" ></a>
                     </td>
                 </tr>
                 {% endfor %}

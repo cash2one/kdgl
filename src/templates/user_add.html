@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <!-- start: Meta -->
+    <meta charset="UTF-8">
+    <title>快递管理系统</title>
+    <meta name="description" content="zjyw">
+    <meta name="author" content="cdg">
+    <meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <!-- end: Meta -->
+    
+    <!-- start: Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- end: Mobile Specific -->
+    
+    <!-- start: CSS -->
+    <link id="bootstrap-style" href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link id="base-style" href="/css/style.css" rel="stylesheet">
+    <link id="base-style-responsive" href="/css/style-responsive.css" rel="stylesheet">
+
+    <script src="/js/laydate/laydate.js" charset="UTF-8"></script>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <!-- start: CSS -->
+    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <!-- end: CSS -->
+    <script type="text/javascript" src="/js/jquery-1.8.3.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <script src="/js/laydate/laydate.js" charset="UTF-8"></script>
+    <style>  
+        div.graph  
+                {  
+                    width: 280px;  
+                    height: 200px;  
+                }  
+        
+    </style>
+</head>
+
+<body>
+    <div class="row-fluid sortable" id='edit'>
+            <div class="box-header" data-original-title>
+                <h2><i class="halflings-icon edit"></i><span class="break"></span>添加信息</h2>
+            </div>
+
+            <div class="box-content">
+                <div class="form-horizontal">
+                    
+                    <div class="control-group success">
+                        <label class="control-label" >快递员姓名: </label>&nbsp&nbsp
+                        <input  id="username" type="text" placeholder="快递员姓名" value="{{ username }}">
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" >快递员编号: </label>&nbsp&nbsp
+                        <input  id="number" type="text" placeholder="快递员编号" value="{{ number }}">
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" >联系方式: </label>&nbsp&nbsp
+                        <input  id="phone" type="text" placeholder="联系方式" value="{{ phone }}">
+                    </div>
+                    <div class="control-group success">
+                        <label class="control-label" >绩效:</label>&nbsp&nbsp
+                        <input  id="performance" type="text" placeholder="绩效" disabled value="0.00">
+                    </div>
+                    
+                    <div class="control-group">
+                      <div class="form-actions">
+                         <button class="btn btn-primary" onclick="user_add();" >确定</button>
+                         <button class="btn" onclick= "window.opener.location.reload();window.close();" >取消</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div><!--/span-->
+    <script type="text/javascript">
+
+        function sync_post( url , data ) {
+            /*
+            同步POST
+            同步方式操作ajax，返回值同call_python，为一个字典:
+            其中-> ret 0 失败 1 成功
+                    当ret==1 时，val为ajax返回的json对象
+                    当ret==0 时，exc为错误内容：null，"timeout", "error", "notmodified" 和 "parsererror"
+            用法举例：
+                ret = sync_post( "/cx/jgxx/", { "hh": hh} )
+                if ( ret.ret ){
+                    set_value( 'jgmc' , ret.val );
+                } else {
+                    set_status( "获取行名出错：" + ret.exc );
+                }
+            */
+            var retval = { ret: 0 }
+            jQuery.ajax( {
+                async: false,  //同步 异步为true
+                type: 'POST',
+                url: url,
+                data: data,
+                cache: false,
+                contentType: "application/x-www-form-urlencoded;charset=utf-8", 
+                dataType:"json",
+                //成功
+                success:function( json ){
+                    retval.ret = 1
+                    retval.val = json;
+                },
+                //错误
+                error: function( XMLHttpRequest, textStatus, errorThrown ){
+                    //更新交易页面框架信息 statusbar
+                    retval.ret = 0;
+                    retval.exc = textStatus;
+                }
+            } );
+            return retval;
+        }
+        
+        //添加用户信息
+        function user_add(){
+            var username = document.getElementById("username");
+            var number = document.getElementById("number");
+            var phone = document.getElementById("phone");
+            var performance = document.getElementById("performance");
+            
+            if( username.value=='null'||username.value==''){
+                alert("请填写用户名！");
+                username.focus();
+                return false;
+            }
+            if( number.value=='null'||number.value==''){
+                alert("请填写快递员编号！");
+                number.focus();
+                return false;
+            }
+            if( phone.value=='null'||phone.value==''){
+                alert("请填写联系方式！");
+                phone.focus();
+                return false;
+            }
+            if( performance.value=='null'||performance.value==''){
+                alert("请选择快递员绩效！");
+                performance.focus();
+                return false;
+            }
+            rr = sync_post( "/add_user/" , {"username": username.value, "number": number.value, "phone": phone.value, "performance":performance.value,"password":'123456' } );
+            if ( rr.ret ) {
+                json = rr.val;
+                if(json.xym=='000000'){
+                    alert(json.xyxx);
+                    window.opener.location.reload(); 
+                    window.close();
+                    return true;
+                }else{
+                    alert(json.xyxx);
+                    return false;
+                }
+            } else {
+                alert("操作失败，请联系管理员");
+                return false;
+            }
+        }
+    </script>
+            
+</body>
+</html>

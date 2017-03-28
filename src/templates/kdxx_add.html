@@ -44,21 +44,21 @@
 <body>
     <div class="row-fluid sortable" id='edit'>
             <div class="box-header" data-original-title>
-                <h2><i class="halflings-icon edit"></i><span class="break"></span>编辑信息</h2>
+                <h2><i class="halflings-icon edit"></i><span class="break"></span>添加信息</h2>
             </div>
 
             <div class="box-content">
                 <div class="form-horizontal">
                     <div class="control-group success">
                         <label class="control-label" for="selectError3">快递单号: </label> &nbsp&nbsp
-                        <input  id="express_number" type="text" placeholder="快递单号" value="{{ express_number }}">
+                        <input  id="express_number" type="text" placeholder="快递单号" value="">
                     </div>
                     <div class="control-group success"  id="date1" style="display:block;" >
                         <label class="control-label">快递日期时间:</label>&nbsp&nbsp
-                        <input id='created_at' onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="{{ created_at }}">
+                        <input id='created_at' onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="">
                     </div>
                     <div class="control-group success">
-                        <label class="control-label">快递种类:</label>&nbsp&nbsp
+                        <label class="control-label" >快递种类:</label>&nbsp&nbsp
                           <select id="express_classification">
                             <option value='0'>小包</option>
                             <option value='1'>中包</option>
@@ -67,7 +67,7 @@
                           </select>
                     </div>
                     <div class="control-group success">
-                        <label class="control-label">快递状态:</label>&nbsp&nbsp
+                        <label class="control-label" >快递状态:</label>&nbsp&nbsp
                           <select id="express_status">
                             <option value='0'>待发货</option>
                             <option value='1'>在路上</option>
@@ -84,44 +84,44 @@
                     </div>
                     <div class="control-group success">
                         <label class="control-label" for="selectError3">快递费: </label>&nbsp&nbsp
-                        <input  id="express_money" type="text" placeholder="0.00" value="{{ express_money }}">
+                        <input  id="express_money" type="text" placeholder="0.00" value="">
                     </div>
                     <div class="control-group success">
                         <label class="control-label" for="selectError3">快递员编号: </label>&nbsp&nbsp
-                        <input  id="express_user_id" type="text" placeholder="编号" value="{{ express_user_id }}">
+                        <input  id="express_user_id" type="text" placeholder="请输入快递员编号" value="">
                     </div>
                     <div class="control-group success">
                         <label class="control-label" for="selectError3">货架编号: </label>&nbsp&nbsp
-                        <input  id="shelf_number" type="text" placeholder="货架编号" value="{{ shelf_number }}">
+                        <input  id="shelf_number" type="text" placeholder="请输入货架编号" value="">
                     </div>
                     <div class="control-group success">
                         <label class="control-label" for="selectError3">发件人姓名:</label>&nbsp&nbsp
-                        <input  id="sender_name" type="text" placeholder="请输入发件人姓名" value="{{ sender_name }}">
+                        <input  id="sender_name" type="text" placeholder="请输入发件人姓名" value="">
                     </div>
                     <div class="control-group success">
                         <label class="control-label" for="selectError3">发件人联系方式: </label>&nbsp&nbsp
-                        <input  id="sender_phone" type="text" placeholder="请输入11位手机号" value="{{ sender_phone }}">
+                        <input  id="sender_phone" type="text" placeholder="请输入11位手机号" value="">
                     </div>
                     <div class="control-group success">
                         <label class="control-label" for="selectError3">发件人地址: </label>&nbsp&nbsp
-                        <input  id="sender_address" type="text" placeholder="请输入发件人地址" value="{{ sender_address }}">
+                        <input  id="sender_address" type="text" placeholder="请输入发件人地址" value="">
                     </div>
                     <div class="control-group success">
                         <label class="control-label" for="selectError3">收件人姓名: </label>&nbsp&nbsp
-                        <input  id="reciver_name" type="text" placeholder="请输入收件人姓名" value="{{ reciver_name }}">
+                        <input  id="reciver_name" type="text" placeholder="请输入收件人姓名" value="">
                     </div>
                     <div class="control-group success">
                         <label class="control-label" for="selectError3">收件人联系方式: </label>&nbsp&nbsp
-                        <input  id="reciver_phone" type="text" placeholder="请输入11位手机号" value="{{ reciver_phone }}">
+                        <input  id="reciver_phone" type="text" placeholder="请输入11位手机号" value="">
                     </div>
                     <div class="control-group success">
                         <label class="control-label" for="selectError3">收件人地址: </label>&nbsp&nbsp
-                        <input  id="reciver_address" type="text" placeholder="请输入收件人地址" value="{{ reciver_address }}">
+                        <input  id="reciver_address" type="text" placeholder="请输入收件人地址" value="">
                     </div>
                     
                     <div class="control-group">
                       <div class="form-actions">
-                         <button class="btn btn-primary" onclick="kd_edit();" >确定</button>
+                         <button class="btn btn-primary" onclick="kd_add();" >确定</button>
                          <button class="btn" onclick= "window.opener.location.reload();window.close();" >取消</button>
                         </div>
                     </div>
@@ -129,29 +129,7 @@
         </div>
     </div><!--/span-->
     <script type="text/javascript">
-        //选中节点的方法，第一个参数为select的id，第二个参数为后台传来的值
-        function checkOption(id,value)
-           {
-            //获得下拉列表的id
-            var select = document.getElementById(id);
-            //获得下拉列表的所有option
-            var options = select.options;
-            //循环获得对应的节点
-            for(var i=0;i<options.length;i++)
-            {
-             //获得节点的值和后台传来的值进行比较
-             if (options[i].value == value)
-             {
-              //如果当前节点与后台传来的值一致，则将当前节点设置为选中状态，并跳出循环
-              options[i].selected = true;
-              break;
-             }
-            }
-        }
 
-        checkOption('express_status','{{express_status}}');
-        checkOption('express_classification','{{express_classification}}');
-        checkOption('type','{{type}}');
         function sync_post( url , data ) {
             /*
             同步POST
@@ -191,9 +169,8 @@
             return retval;
         }
         
-        //编辑快递信息
-        function kd_edit(){
-            var id = '{{ id }}';
+        //添加快递信息
+        function kd_add(){
             var type = document.getElementById("type");
             var express_number = document.getElementById("express_number");
             var created_at = document.getElementById("created_at");
@@ -274,7 +251,7 @@
                 express_user_id.focus();
                 return false;
             }
-            rr = sync_post( "/kd_edit/" , {"id": id, "express_classification": express_classification.value, "express_user_id": express_user_id.value, "sender_name": sender_name.value, "express_money":express_money.value, "express_number": express_number.value, "express_status": express_status.value, "sender_address": sender_address.value, "reciver_name": reciver_name.value, "sender_phone": sender_phone.value, "reciver_address": reciver_address.value, "shelf_number": shelf_number.value, "reciver_phone": reciver_phone.value, "type": type.value, "created_at": created_at.value } );
+            rr = sync_post( "/add_kdxx/" , { "express_classification": express_classification.value, "express_user_id": express_user_id.value, "sender_name": sender_name.value, "express_money":express_money.value, "express_number": express_number.value, "express_status": express_status.value, "sender_address": sender_address.value, "reciver_name": reciver_name.value, "sender_phone": sender_phone.value, "reciver_address": reciver_address.value, "shelf_number": shelf_number.value, "reciver_phone": reciver_phone.value, "type": type.value, "created_at": created_at.value } );
             if ( rr.ret ) {
                 json = rr.val;
                 if(json.xym=='000000'){
