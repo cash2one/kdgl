@@ -3,6 +3,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
 import os, json, datetime, xlsxwriter
 from zjyw_utils import *
@@ -57,9 +58,9 @@ def kdxx_del_view(request):
            
         log.info( "kdgl", "快递信息删除sql【%s】", sql )
         if cur.rowcount == 1:
-            log.info( "kdgl", "主机删除成功！" )
+            log.info( "kdgl", "快递信息删除成功！" )
             content['xym'] = '000000'
-            content['xyxx'] = '主机删除成功！'
+            content['xyxx'] = '快递信息删除成功！'
             return HttpResponse( json.dumps( content), content_type='application/json' )
         else:
             # 返回错误信息

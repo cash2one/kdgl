@@ -74,8 +74,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'kdgl',
-        'USER': 'kdgl',
-        'PASSWORD': 'kdgl',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': 'localhost',  
         'PORT': '3306',   
         
@@ -95,6 +95,7 @@ FILES_DIR = os.path.join( BASE_DIR , 'modules')
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/static/'
 
 STATIC_DIR =os.path.join( BASE_DIR, 'static' )  # url
 
